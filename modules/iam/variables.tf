@@ -20,4 +20,8 @@ variable "mh_strategy_collector" {
   description = "Migration Hub Strategy Collector - Managed policy - ARN"
   type        = string
 }
+variable "cnam_user_name" {
+  description = "CNAM User name"
+  type        = string
+}
 

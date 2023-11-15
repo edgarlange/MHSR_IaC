@@ -94,8 +94,7 @@ resource "aws_iam_role" "fleet_advisor_s3" {
   tags = local.resource_tags
 }
 resource "aws_iam_user" "e24x7_adssr_user" {
-  name = "e24x7-adssr-user"
-  path = "/system/"
+  name = var.cnam_user_name
   tags = local.resource_tags
 }
 resource "aws_iam_user_policy_attachment" "dms_attach" {
