@@ -1,6 +1,16 @@
 # Created by https://www.toptal.com/developers/gitignore/api/terraform
 # Edit at https://www.toptal.com/developers/gitignore?templates=terraform
 
+### keys ###
+private.key
+encrypted.txt
+
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
 ### Terraform ###
 # Local .terraform directories
 **/.terraform/*
