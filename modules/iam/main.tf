@@ -123,7 +123,7 @@ resource "aws_iam_user_policy_attachment" "strategy_collector" {
   policy_arn = var.mh_strategy_collector
 }
 resource "aws_iam_access_key" "ads_sr" {
-  user    = aws_iam_user.e24x7_adssr_user
+  user    = aws_iam_user.e24x7_adssr_user.name
   pgp_key = file("./keys/publicbase64.key")
 }
 
