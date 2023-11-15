@@ -37,8 +37,8 @@ resource "aws_iam_policy" "fleet_advisor_s3" {
           "s3:PutObject*"
         ],
         "Resource" : [
-          "arn:aws:s3:::e24x7-ads-db-xxxxx",
-          "arn:aws:s3:::e24x7-ads-db-xxxxx/*"
+          "arn:aws:s3:::${var.cnam_bucket_name}",
+          "arn:aws:s3:::${var.cnam_bucket_name}/*"
         ]
       }
     ]
@@ -94,8 +94,7 @@ resource "aws_iam_role" "fleet_advisor_s3" {
   tags = local.resource_tags
 }
 resource "aws_iam_user" "e24x7_adssr_user" {
-  name = "e24x7-adssr-user"
-  path = "/system/"
+  name = var.cnam_user_name
   tags = local.resource_tags
 }
 resource "aws_iam_user_policy_attachment" "dms_attach" {
@@ -123,7 +122,7 @@ resource "aws_iam_user_policy_attachment" "strategy_collector" {
   policy_arn = var.mh_strategy_collector
 }
 resource "aws_iam_access_key" "ads_sr" {
-  user    = aws_iam_user.e24x7_adssr_user
+  user    = aws_iam_user.e24x7_adssr_user.name
   pgp_key = file("./keys/publicbase64.key")
 }
 
