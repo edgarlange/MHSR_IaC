@@ -24,4 +24,8 @@ variable "cnam_user_name" {
   description = "CNAM User name"
   type        = string
 }
+variable "cnam_bucket_name" {
+  description = "CNAM Bucket name"
+  type        = string
+}
 

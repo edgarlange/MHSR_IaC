@@ -37,8 +37,8 @@ resource "aws_iam_policy" "fleet_advisor_s3" {
           "s3:PutObject*"
         ],
         "Resource" : [
-          "arn:aws:s3:::e24x7-ads-db-xxxxx",
-          "arn:aws:s3:::e24x7-ads-db-xxxxx/*"
+          "arn:aws:s3:::${var.cnam_bucket_name}",
+          "arn:aws:s3:::${var.cnam_bucket_name}/*"
         ]
       }
     ]
