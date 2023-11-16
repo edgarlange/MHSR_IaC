@@ -16,5 +16,5 @@ variable "area" {
 variable "aws_profile" {
   description = "AWS Profile"
   type        = string
-  default     = "elange-CNAM-AA"
+  default     = "elange-CNAM-AA" # Default, elange-CNAM-AA, etc
 }

@@ -29,7 +29,6 @@ resource "aws_security_group" "sg_collector" {
     protocol    = "tcp"
     cidr_blocks = [var.external_mgmt_ip, var.subnet_cidr]
   }
-
   egress {
     from_port   = 0
     to_port     = 0
