@@ -2,8 +2,9 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=terraform
 
 ### keys ###
-**/keys/private.*
-**/keys/encrypted.*
+/keys/*.pem
+/keys/private.*
+/keys/encrypted.*
 private.*
 encrypted.*
 

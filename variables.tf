@@ -13,3 +13,8 @@ variable "area" {
   type        = string
   default     = "Cloud Native and Modernization"
 }
+variable "aws_profile" {
+  description = "AWS Profile"
+  type        = string
+  default     = "elange-CNAM-AA" # <---- Default, elange-CNAM-AA, etc
+}

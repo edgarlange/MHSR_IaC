@@ -25,16 +25,14 @@ variable "subnet_cidr" {
   type        = string
 }
 variable "external_mgmt_ip" {
-  description = "CNAM Ingress"
+  description = "Ingress traffic"
   type        = string
-
 }
-variable "ec2_collector_specs" {
+variable "ec2_codeanalysis_specs" {
   description = "Parametros de la instancia"
   type        = map(string)
-
 }
 variable "key_pair_name" {
   type    = string
-  default = "mhsr_key"
+  default = "porta_key"
 }
