@@ -25,28 +25,8 @@ resource "aws_iam_policy" "service_linked_role_policy" {
   })
   tags = local.resource_tags
 }
-resource "aws_iam_role" "service_linked_role" {
-  name        = "DMSFleetAdvisorservicelinkedRole"
-  description = "DMS Fleet Advisor Service-Linked Role"
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
-  assume_role_policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
-      {
-        "Effect" : "Allow",
-        "Principal" : {
-          "Service" : "dms-fleet-advisor.amazonaws.com"
-        },
-        "Action" : "sts:AssumeRole"
-      }
-    ]
-  })
-  tags = local.resource_tags
-}
-resource "aws_iam_role_policy_attachment" "service_linked_role_attach" {
-  role       = aws_iam_role.service_linked_role.name
-  policy_arn = aws_iam_policy.service_linked_role_policy.arn
+resource "aws_iam_service_linked_role" "dms_fleet_advisor" {
+  aws_service_name = var.dms_fleet_advisor_service
 }
 resource "aws_iam_policy" "dms_collector" {
   name        = "DMSCollectorPolicy"

@@ -8,6 +8,10 @@ variable "area" {
   type        = string
   default     = "Cloud Native and Modernization"
 }
+variable "dms_fleet_advisor_service" {
+  description = "AWS DMS Fleet Advisor Service name"
+  type        = string
+}
 variable "ad_agent_access" {
   description = "Application Discovery Agent Access - Managed policy - ARN"
   type        = string
