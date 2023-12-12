@@ -16,11 +16,11 @@ resource "aws_instance" "collector" {
   subnet_id              = var.subnet_id
   key_name               = aws_key_pair.mhsr_key.key_name
   vpc_security_group_ids = [aws_security_group.sg_collector.id]
-  tags                   = local.resource_tags
+  tags                   = merge({ "Name" : "MHSR Collector" }, { "Description" : "Application Data Collector" }, local.resource_tags)
 }
 resource "aws_security_group" "sg_collector" {
   name        = "SRCollectorSG"
-  description = "Collector instance Security Group"
+  description = "Strategy Recommendations Collector instance Security Group"
   vpc_id      = var.vpc_id
   ingress {
     description = "SSH from Internet"

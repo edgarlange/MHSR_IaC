@@ -67,8 +67,8 @@ resource "aws_iam_policy" "fleet_advisor_s3" {
           "s3:PutObject*"
         ],
         "Resource" : [
-          "arn:aws:s3:::${var.cnam_bucket_name}",
-          "arn:aws:s3:::${var.cnam_bucket_name}/*"
+          "arn:aws:s3:::${var.bucket_name}",
+          "arn:aws:s3:::${var.bucket_name}/*"
         ]
       }
     ]
@@ -122,6 +122,10 @@ resource "aws_iam_role" "fleet_advisor_s3" {
     }]
   })
   tags = local.resource_tags
+}
+resource "aws_iam_role_policy_attachment" "fleet_policy_attach" {
+  role       = aws_iam_role.fleet_advisor_s3.name
+  policy_arn = aws_iam_policy.fleet_advisor_s3.arn
 }
 resource "aws_iam_user" "e24x7_adssr_user" {
   name = var.cnam_user_name

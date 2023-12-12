@@ -13,7 +13,7 @@ terraform {
 }
 
 provider "aws" {
-  region  = "us-west-2"
+  region  = "us-east-1"
   profile = var.aws_profile
   default_tags {
     tags = local.resource_tags

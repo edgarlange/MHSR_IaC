@@ -1,4 +1,4 @@
-resource "aws_s3_bucket" "cnam_bucket" {
+resource "aws_s3_bucket" "fleet_bucket" {
   bucket = var.bucket_name
   tags   = local.resource_tags
 }

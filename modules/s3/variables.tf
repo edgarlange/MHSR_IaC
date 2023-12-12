@@ -8,6 +8,11 @@ variable "area" {
   type        = string
   default     = "Cloud Native and Modernization"
 }
+variable "proyecto" {
+  description = "REC"
+  type        = string
+  default     = "REC"
+}
 variable "bucket_name" {
   description = "Bucket name"
   type        = string

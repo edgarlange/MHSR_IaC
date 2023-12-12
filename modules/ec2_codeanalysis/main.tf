@@ -16,7 +16,7 @@ resource "aws_instance" "porting" {
   subnet_id              = var.subnet_id
   key_name               = aws_key_pair.porta_key.key_name
   vpc_security_group_ids = [aws_security_group.sg_codeanalysis.id]
-  tags                   = local.resource_tags
+  tags                   = merge({ "Name" : "MHSR Code Analisis" }, { "Description" : "Porting Assistant" }, local.resource_tags)
 }
 resource "aws_security_group" "sg_codeanalysis" {
   name        = "CodeAnalysisSG"

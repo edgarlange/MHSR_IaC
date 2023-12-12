@@ -8,6 +8,11 @@ variable "area" {
   type        = string
   default     = "Cloud Native and Modernization"
 }
+variable "proyecto" {
+  description = "REC"
+  type        = string
+  default     = "REC"
+}
 variable "dms_fleet_advisor_service" {
   description = "AWS DMS Fleet Advisor Service name"
   type        = string
@@ -28,8 +33,8 @@ variable "cnam_user_name" {
   description = "CNAM User name"
   type        = string
 }
-variable "cnam_bucket_name" {
-  description = "CNAM Bucket name"
+variable "bucket_name" {
+  description = "Bucket name"
   type        = string
 }
 

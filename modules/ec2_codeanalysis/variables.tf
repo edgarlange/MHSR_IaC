@@ -8,6 +8,11 @@ variable "area" {
   type        = string
   default     = "Cloud Native and Modernization"
 }
+variable "proyecto" {
+  description = "REC"
+  type        = string
+  default     = "REC"
+}
 variable "vpc_id" {
   description = "VPC ID"
   type        = string

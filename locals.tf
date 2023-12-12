@@ -2,6 +2,7 @@ locals {
   resource_tags = {
     "Proveedor" = var.proveedor
     "Area"      = var.area
+    "Proyecto"  = var.proyecto
   }
 }
 resource "random_string" "sufijo-s3" {
@@ -10,5 +11,5 @@ resource "random_string" "sufijo-s3" {
   upper   = false
 }
 locals {
-  s3-sufix = "${var.alias}-${random_string.sufijo-s3.id}"
+  s3-sufix = random_string.sufijo-s3.id
 }
