@@ -21,7 +21,7 @@ variable "proyecto" {
 variable "aws_profile" {
   description = "AWS Profile"
   type        = string
-  default     = "elange-GCC-AA" # <---- Default, elange-CNAM-AA, etc
+  default     = "elange-CNAM-AA" # <---- Default, elange-CNAM-AA, etc
 }
 variable "create_porting_assistant" {
   default = true # <---- Cambia a false para desactivar la creación de instancias EC2
