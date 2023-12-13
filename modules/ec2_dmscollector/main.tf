@@ -16,11 +16,11 @@ resource "aws_instance" "dmscollector" {
   subnet_id              = var.subnet_id
   key_name               = aws_key_pair.dmsc_key.key_name
   vpc_security_group_ids = [aws_security_group.sg_dmscollector.id]
-  tags                   = merge({ "Name" : "DMS Collector" }, { "Description" : "Database Migration Service Collector" }, local.resource_tags)
+  tags                   = merge({ "Name" : "E24x7 DMS-C" }, { "Description" : "Database Migration Service Collector" }, local.resource_tags)
 }
 resource "aws_security_group" "sg_dmscollector" {
-  name        = "DMSCollectorSG"
-  description = "DMS Collector instance Security Group"
+  name        = "E24x7-DMSC"
+  description = "Allow access from management subnets"
   vpc_id      = var.vpc_id
   ingress {
     description = "RDP from Internet"

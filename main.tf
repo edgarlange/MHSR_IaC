@@ -9,45 +9,45 @@ module "iam" {
   ad_agentless              = "arn:aws:iam::aws:policy/AWSApplicationDiscoveryAgentlessCollectorAccess"
   mh_strategy_collector     = "arn:aws:iam::aws:policy/AWSMigrationHubStrategyCollector"
   dms_fleet_advisor_service = "dms-fleet-advisor.amazonaws.com"
-  cnam_user_name            = "e24x7-adssr-user"
+  cnam_user_name            = var.cnam_user_name
   bucket_name               = module.s3.bucket_name
 }
 module "sr_collector" {
   source      = "./modules/ec2_srcollector"
   count       = var.create_sr_collector ? 1 : 0
-  vpc_id      = "vpc-0fefd1f506f0eda13"    # <---- VPC ID donde se despliega el collector
-  vpc_cidr    = "172.19.22.0/23"           # <---- CIDR del VPC
-  subnet_id   = "subnet-041d55417ce85e7a7" # <---- Subnet ID donde se despliega el collector
-  subnet_cidr = "172.19.23.0/25"           # <---- CIDR de la Subnet
+  vpc_id      = var.vpc_id
+  vpc_cidr    = var.vpc_cidr
+  subnet_id   = var.subnet_id
+  subnet_cidr = var.subnet_cidr
   ec2_collector_specs = {
-    "ami"           = "ami-0972df9857f16644a" # AMI AWSMHubApplicationDataCollector. Propietario 703163444405
+    "ami"           = var.ami_appdatcollector
     "instance_type" = "t3.large"
   }
-  external_mgmt_ip = "186.188.205.168/32" # <---- IP externa Team CNAM
+  external_mgmt_ip = var.my_ip
 }
 module "code_analysis" {
   source      = "./modules/ec2_codeanalysis"
   count       = var.create_porting_assistant ? 1 : 0
-  vpc_id      = "vpc-0fefd1f506f0eda13"    # <---- VPC ID donde se despliega el collector
-  vpc_cidr    = "172.19.22.0/23"           # <---- CIDR del VPC
-  subnet_id   = "subnet-041d55417ce85e7a7" # <---- Subnet ID donde se despliega el collector
-  subnet_cidr = "172.19.23.0/25"           # <---- CIDR de la Subnet
+  vpc_id      = var.vpc_id
+  vpc_cidr    = var.vpc_cidr
+  subnet_id   = var.subnet_id
+  subnet_cidr = var.subnet_cidr
   ec2_codeanalysis_specs = {
-    "ami"           = "ami-0cd601a22ac9e6d79" # AMI Windows 2022
+    "ami"           = var.ami_w2022
     "instance_type" = "t3.large"
   }
-  external_mgmt_ip = "186.188.205.168/32" # <---- IP externa Team CNAM
+  external_mgmt_ip = var.my_ip
 }
 module "dms_collector" {
   source      = "./modules/ec2_dmscollector"
   count       = var.create_dms_collector ? 1 : 0
-  vpc_id      = "vpc-0fefd1f506f0eda13"    # <---- VPC ID donde se despliega el collector
-  vpc_cidr    = "172.19.22.0/23"           # <---- CIDR del VPC
-  subnet_id   = "subnet-041d55417ce85e7a7" # <---- Subnet ID donde se despliega el collector
-  subnet_cidr = "172.19.23.0/25"           # <---- CIDR de la Subnet
+  vpc_id      = var.vpc_id
+  vpc_cidr    = var.vpc_cidr
+  subnet_id   = var.subnet_id
+  subnet_cidr = var.subnet_cidr
   ec2_dmscollector_specs = {
-    "ami"           = "ami-0cd601a22ac9e6d79" # AMI Windows 2022
+    "ami"           = var.ami_w2022
     "instance_type" = "t3.large"
   }
-  external_mgmt_ip = "186.188.205.168/32" # <---- IP externa Team CNAM
+  external_mgmt_ip = var.my_ip
 }

@@ -16,11 +16,11 @@ resource "aws_instance" "porting" {
   subnet_id              = var.subnet_id
   key_name               = aws_key_pair.porta_key.key_name
   vpc_security_group_ids = [aws_security_group.sg_codeanalysis.id]
-  tags                   = merge({ "Name" : "MHSR Code Analisis" }, { "Description" : "Porting Assistant" }, local.resource_tags)
+  tags                   = merge({ "Name" : "E24x7 PA" }, { "Description" : "Porting Assistant" }, local.resource_tags)
 }
 resource "aws_security_group" "sg_codeanalysis" {
-  name        = "CodeAnalysisSG"
-  description = "Code Analysis (Porting Assistant) Group"
+  name        = "E24x7-PA"
+  description = "Allow access from management subnets"
   vpc_id      = var.vpc_id
   ingress {
     description = "RDP from Internet"
