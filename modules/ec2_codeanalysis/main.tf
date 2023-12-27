@@ -17,6 +17,7 @@ resource "aws_instance" "porting" {
   key_name               = aws_key_pair.porta_key.key_name
   vpc_security_group_ids = [aws_security_group.sg_codeanalysis.id]
   tags                   = merge({ "Name" : "E24x7 PA" }, { "Description" : "Porting Assistant" }, local.resource_tags)
+  user_data              = file("${path.module}/user_data.ps1")
 }
 resource "aws_security_group" "sg_codeanalysis" {
   name        = "E24x7-PA"

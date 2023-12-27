@@ -14,14 +14,14 @@ variable "area" {
   default     = "Cloud Native and Modernization"
 }
 variable "proyecto" {
-  description = "REC"
+  description = "MHSR" # <---- Proyecto
   type        = string
-  default     = "REC"
+  default     = "MHSR" # <---- Proyecto
 }
 variable "region" {
   description = "Region"
   type        = string
-  default     = "us-west-2"
+  default     = "us-west-2" # <---- Region
 }
 variable "aws_profile" {
   description = "AWS Profile"
