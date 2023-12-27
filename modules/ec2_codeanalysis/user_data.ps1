@@ -10,12 +10,12 @@ if(!(test-path -Path "c:\temp"))
 msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi /qn
 
 ## DotNet 6.0
-$URL1 = https://download.visualstudio.microsoft.com/download/pr/81531ad6-afa9-4b61-9d05-6a76dce81123/2885d26c1a58f37176fd7859f8cc80f1/dotnet-sdk-6.0.417-win-x64.exe
+$URL1 = "https://download.visualstudio.microsoft.com/download/pr/81531ad6-afa9-4b61-9d05-6a76dce81123/2885d26c1a58f37176fd7859f8cc80f1/dotnet-sdk-6.0.417-win-x64.exe"
 $Path1 = "c:\temp\dotnet-sdk-6.0.417-win-x64.exe"
 Invoke-WebRequest -URI $URL1 -OutFile $Path1
 # Start-BitsTransfer -Source $URL1 -Destination $Path1
 # (New-Object System.Net.WebClient).DownloadFile ($URL1, $Path1)
-dotnet-sdk-6.0.417-win-x64.exe /install /quiet /norestart
+c:/temp/dotnet-sdk-6.0.417-win-x64.exe /install /quiet /norestart
 
 ## Porting Assistant
 $URL2 = “https://s3.us-west-2.amazonaws.com/aws.portingassistant.dotnet.download/latest/windows/Porting-Assistant-Dotnet.exe”
