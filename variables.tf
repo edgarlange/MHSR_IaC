@@ -28,6 +28,13 @@ variable "aws_profile" {
   type        = string
   default     = "elange-CNAM-AA" # <---- Default, elange-CNAM-AA, etc
 }
+
+variable "create_iam_ad" {
+  default = true # <---- Cambia a false para desactivar la creación de Application Discovery Service
+}
+variable "create_iam_sr" {
+  default = true # <---- Cambia a false para desactivar la creación Strategy Recommendations
+}
 variable "create_porting_assistant" {
   default = true # <---- Cambia a false para desactivar la creación de instancias EC2
 }
@@ -75,8 +82,13 @@ variable "my_ip" {
   type        = string
   default     = "186.188.205.168/32" # <---- IP externa Team CNAM
 }
-variable "cnam_user_name" {
-  description = "CNAM User name"
+variable "ads_user_name" {
+  description = "Applications Discovery Service user name"
   type        = string
-  default     = "e24x7-adssr-user"
+  default     = "e24x7-ads-user"
+}
+variable "sr_user_name" {
+  description = "Strategy Recommendations user name"
+  type        = string
+  default     = "e24x7-sr-user"
 }

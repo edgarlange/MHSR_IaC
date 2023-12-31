@@ -1,3 +1,12 @@
+#### ADS
+resource "aws_iam_user" "e24x7_ads_user" {
+  name = var.ads_user_name
+  tags = local.resource_tags
+}
+resource "aws_iam_access_key" "ads" {
+  user    = aws_iam_user.e24x7_ads_user.name
+  pgp_key = file("./keys/publicbase64.key")
+}
 resource "aws_iam_policy" "service_linked_role_policy" {
   name        = "DMSFleetAdvisorCreateServiceLinkedRolePolicy"
   path        = "/"
@@ -75,34 +84,6 @@ resource "aws_iam_policy" "fleet_advisor_s3" {
   })
   tags = local.resource_tags
 }
-resource "aws_iam_policy" "porting_assistant" {
-  name        = "PortingAssistantPolicy"
-  path        = "/"
-  description = "Porting Assistant policy"
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
-  policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
-      {
-        "Sid" : "EnCorePermission",
-        "Effect" : "Allow",
-        "Action" : [
-          "execute-api:invoke",
-          "s3:GetObject",
-          "s3:ListBucket"
-        ],
-        "Resource" : [
-          "arn:aws:execute-api:us-east-1:492443789615:3dmmp07yx6/*",
-          "arn:aws:execute-api:us-east-1:547614552430:8q2itpfg51/*",
-          "arn:aws:s3:::aws.portingassistant.dotnet.datastore",
-          "arn:aws:s3:::aws.portingassistant.dotnet.datastore/*"
-        ]
-      }
-    ]
-  })
-  tags = local.resource_tags
-}
 resource "aws_iam_role" "fleet_advisor_s3" {
   name = "FleetAdvisorS3Role"
   # Terraform's "jsonencode" function converts a
@@ -127,36 +108,20 @@ resource "aws_iam_role_policy_attachment" "fleet_policy_attach" {
   role       = aws_iam_role.fleet_advisor_s3.name
   policy_arn = aws_iam_policy.fleet_advisor_s3.arn
 }
-resource "aws_iam_user" "e24x7_adssr_user" {
-  name = var.cnam_user_name
-  tags = local.resource_tags
-}
 resource "aws_iam_user_policy_attachment" "dms_attach" {
-  user       = aws_iam_user.e24x7_adssr_user.name
+  user       = aws_iam_user.e24x7_ads_user.name
   policy_arn = aws_iam_policy.dms_collector.arn
 }
 resource "aws_iam_user_policy_attachment" "fleet_attach" {
-  user       = aws_iam_user.e24x7_adssr_user.name
+  user       = aws_iam_user.e24x7_ads_user.name
   policy_arn = aws_iam_policy.fleet_advisor_s3.arn
 }
-resource "aws_iam_user_policy_attachment" "porting_attach" {
-  user       = aws_iam_user.e24x7_adssr_user.name
-  policy_arn = aws_iam_policy.porting_assistant.arn
-}
 resource "aws_iam_user_policy_attachment" "agent_access" {
-  user       = aws_iam_user.e24x7_adssr_user.name
+  user       = aws_iam_user.e24x7_ads_user.name
   policy_arn = var.ad_agent_access
 }
 resource "aws_iam_user_policy_attachment" "agentless" {
-  user       = aws_iam_user.e24x7_adssr_user.name
+  user       = aws_iam_user.e24x7_ads_user.name
   policy_arn = var.ad_agentless
-}
-resource "aws_iam_user_policy_attachment" "strategy_collector" {
-  user       = aws_iam_user.e24x7_adssr_user.name
-  policy_arn = var.mh_strategy_collector
-}
-resource "aws_iam_access_key" "ads_sr" {
-  user    = aws_iam_user.e24x7_adssr_user.name
-  pgp_key = file("./keys/publicbase64.key")
 }
 
