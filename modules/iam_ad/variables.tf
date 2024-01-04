@@ -1,20 +1,13 @@
 variable "proveedor" {
-  description = "Escala 24x7"
+  description = "Proveedor"
   type        = string
-  default     = "Escala 24x7"
 }
 variable "area" {
-  description = "Cloud Native and Modernization"
+  description = "Area"
   type        = string
-  default     = "Cloud Native and Modernization"
 }
 variable "proyecto" {
-  description = "REC"
-  type        = string
-  default     = "REC"
-}
-variable "dms_fleet_advisor_service" {
-  description = "AWS DMS Fleet Advisor Service name"
+  description = "Proyecto"
   type        = string
 }
 variable "ad_agent_access" {
@@ -27,10 +20,6 @@ variable "ad_agentless" {
 }
 variable "ads_user_name" {
   description = "Application Discovery Service user name"
-  type        = string
-}
-variable "bucket_name" {
-  description = "Bucket name"
   type        = string
 }
 

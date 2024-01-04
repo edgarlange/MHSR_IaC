@@ -18,9 +18,12 @@ resource "aws_instance" "porting" {
   vpc_security_group_ids = [aws_security_group.sg_codeanalysis.id]
   tags                   = merge({ "Name" : "E24x7 PA" }, { "Description" : "Porting Assistant" }, local.resource_tags)
   user_data = templatefile("${path.module}/user_data.ps1", {
-    folder = "C:\\InstallFolder"
+    folder     = "C:\temp"
+    dotnet6    = "https://download.visualstudio.microsoft.com/download/pr/81531ad6-afa9-4b61-9d05-6a76dce81123/2885d26c1a58f37176fd7859f8cc80f1/dotnet-sdk-6.0.417-win-x64.exe"
+    dotnet6exe = "dotnet-sdk-6.0.417-win-x64.exe"
+    porting    = "https://s3.us-west-2.amazonaws.com/aws.portingassistant.dotnet.download/latest/windows/Porting-Assistant-Dotnet.exe"
+    portingexe = "Porting-Assistant-Dotnet.exe"
   })
-
 }
 resource "aws_security_group" "sg_codeanalysis" {
   name        = "E24x7-PA"

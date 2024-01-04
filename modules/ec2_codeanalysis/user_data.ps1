@@ -1,8 +1,7 @@
 <powershell>
-    if(!(test-path -Path "c:\temp"))
+    if(!(test-path -Path "${folder}"))
         {    
-            New-Item -ItemType directory -Path "c:\temp"
-            write-host "created temp directory"
+            New-Item -ItemType directory -Path "${folder}"
         }
 
     function Write-Log {
@@ -15,7 +14,7 @@
         [pscustomobject]@{
             Time = (Get-Date -f g)
             Message = $Message
-        } | Export-Csv -Path "c:\temp\UserDataLogFile.log" -Append -NoTypeInformation
+        } | Export-Csv -Path "${folder}\UserDataLogFile.log" -Append -NoTypeInformation
     }
 
     Write-Log "running script"
@@ -26,32 +25,25 @@
     }catch {
         Write-Log -Message $_
     }finally {
-        Write-Log -Message "AWS CLI se instaló satisfactoriamente"
+        Write-Log -Message "AWS CLI se instalo satisfactoriamente"
     }
 
     ## DotNet 6.0
+    $URL1 = "${dotnet6}"
+    $Path1 = "${folder}\${dotnet6exe}"
+    Invoke-WebRequest -URI $URL1 -OutFile $Path1
     try {
-        $URL1 = "https://download.visualstudio.microsoft.com/download/pr/81531ad6-afa9-4b61-9d05-6a76dce81123/2885d26c1a58f37176fd7859f8cc80f1/dotnet-sdk-6.0.417-win-x64.exe"
-        $Path1 = "c:\temp\dotnet-sdk-6.0.417-win-x64.exe"
-        Invoke-WebRequest -URI $URL1 -OutFile $Path1
-        c:/temp/dotnet-sdk-6.0.417-win-x64.exe /install /quiet /norestart
+        "${folder}/${dotnet6exe} /install /quiet /norestart"
     }
     catch {
         Write-Log -Message $_
-    }finally {
-        Write-Log -Message ".NET 6.0 se instaló satisfactoriamente"
+    }
+    finally {
+        Write-Log -Message ".NET 6.0 se instalo satisfactoriamente"
     }
 
     ## Porting Assistant
-
-    try {
-        $URL2 = “https://s3.us-west-2.amazonaws.com/aws.portingassistant.dotnet.download/latest/windows/Porting-Assistant-Dotnet.exe”
-        $Path2 = "c:\temp\Porting-Assistant-Dotnet.exe"
-        Invoke-WebRequest -URI $URL2 -OutFile $Path2
-    }
-    catch {
-        Write-Log -Message $_
-    }finally {
-        Write-Log -Message "Porting Assistant de descargo satisfactoriamente"
-    }
+    $URL2 = "${porting}"
+    $Path2 = "${folder}/${portingexe}"
+    Invoke-WebRequest -URI $URL2 -OutFile $Path2
 </powershell>

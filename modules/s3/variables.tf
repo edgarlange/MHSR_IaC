@@ -1,17 +1,14 @@
 variable "proveedor" {
-  description = "Escala 24x7"
+  description = "Proveedor"
   type        = string
-  default     = "Escala 24x7"
 }
 variable "area" {
-  description = "Cloud Native and Modernization"
+  description = "Area"
   type        = string
-  default     = "Cloud Native and Modernization"
 }
 variable "proyecto" {
-  description = "REC"
+  description = "Proyecto"
   type        = string
-  default     = "REC"
 }
 variable "bucket_name" {
   description = "Bucket name"

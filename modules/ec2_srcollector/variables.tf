@@ -1,17 +1,14 @@
 variable "proveedor" {
-  description = "Escala 24x7"
+  description = "Proveedor"
   type        = string
-  default     = "Escala 24x7"
 }
 variable "area" {
-  description = "Cloud Native and Modernization"
+  description = "Area"
   type        = string
-  default     = "Cloud Native and Modernization"
 }
 variable "proyecto" {
-  description = "REC"
+  description = "Proyecto"
   type        = string
-  default     = "REC"
 }
 variable "vpc_id" {
   description = "VPC ID"
@@ -40,6 +37,6 @@ variable "ec2_collector_specs" {
 
 }
 variable "key_pair_name" {
-  type    = string
-  default = "mhsr_key"
+  description = "Key pair"
+  type        = string
 }
