@@ -1,47 +1,32 @@
 module "s3" {
-  source = "./modules/s3"
-  # count       = var.create_iam_ad ? 1 : 0
-  proveedor   = var.proveedor
-  area        = var.area
-  proyecto    = var.proyecto
+  source      = "./modules/s3"
+  count       = var.create_iam_dmsc ? 1 : 0
   bucket_name = "${var.bucket_name}-${local.s3-sufix}"
 }
 module "iam_ad" {
-  source = "./modules/iam_ad"
-  # count                     = var.create_iam_ad ? 1 : 0
-  proveedor       = var.proveedor
-  area            = var.area
-  proyecto        = var.proyecto
+  source          = "./modules/iam_ad"
+  count           = var.create_iam_ad ? 1 : 0
   ad_agent_access = "arn:aws:iam::aws:policy/AWSApplicationDiscoveryAgentAccess"
   ad_agentless    = "arn:aws:iam::aws:policy/AWSApplicationDiscoveryAgentlessCollectorAccess"
   ads_user_name   = var.ads_user_name
 }
 module "iam_dms" {
-  source = "./modules/iam_dms"
-  # count                     = var.create_iam_ad ? 1 : 0
-  proveedor                 = var.proveedor
-  area                      = var.area
-  proyecto                  = var.proyecto
+  source                    = "./modules/iam_dms"
+  count                     = var.create_iam_dmsc ? 1 : 0
   aws_account_id            = var.aws_account_id
   dms_fleet_advisor_service = "dms-fleet-advisor.amazonaws.com"
   fac_user_name             = var.fac_user_name
-  bucket_name               = module.s3.bucket_name
+  bucket_name               = one(module.s3[*].bucket_name)
 }
 module "iam_sr" {
-  source = "./modules/iam_sr"
-  # count                 = var.create_iam_sr ? 1 : 0
-  proveedor             = var.proveedor
-  area                  = var.area
-  proyecto              = var.proyecto
+  source                = "./modules/iam_sr"
+  count                 = var.create_iam_sr ? 1 : 0
   mh_strategy_collector = "arn:aws:iam::aws:policy/AWSMigrationHubStrategyCollector"
   sr_user_name          = var.sr_user_name
 }
 module "sr_collector" {
   source      = "./modules/ec2_srcollector"
   count       = var.create_sr_collector ? 1 : 0
-  proveedor   = var.proveedor
-  area        = var.area
-  proyecto    = var.proyecto
   vpc_id      = var.vpc_id
   vpc_cidr    = var.vpc_cidr
   subnet_id   = var.subnet_id
@@ -56,9 +41,6 @@ module "sr_collector" {
 module "code_analysis" {
   source      = "./modules/ec2_codeanalysis"
   count       = var.create_porting_assistant ? 1 : 0
-  proveedor   = var.proveedor
-  area        = var.area
-  proyecto    = var.proyecto
   vpc_id      = var.vpc_id
   vpc_cidr    = var.vpc_cidr
   subnet_id   = var.subnet_id
@@ -73,9 +55,6 @@ module "code_analysis" {
 module "dms_collector" {
   source      = "./modules/ec2_dmscollector"
   count       = var.create_dms_collector ? 1 : 0
-  proveedor   = var.proveedor
-  area        = var.area
-  proyecto    = var.proyecto
   vpc_id      = var.vpc_id
   vpc_cidr    = var.vpc_cidr
   subnet_id   = var.subnet_id

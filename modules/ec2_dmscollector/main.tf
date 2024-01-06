@@ -16,11 +16,8 @@ resource "aws_instance" "dmscollector" {
   subnet_id              = var.subnet_id
   key_name               = aws_key_pair.dmsc_key.key_name
   vpc_security_group_ids = [aws_security_group.sg_dmscollector.id]
-  tags                   = merge({ "Name" : "E24x7 DMS-C" }, { "Description" : "Database Migration Service Collector" }, local.resource_tags)
-  user_data = templatefile("${path.module}/user_data.ps1", {
-    folder = "C:\temp"
-    dmsc   = "https://cnam-qwerty-01.s3.amazonaws.com/dms/AWS_DMS_Collector_Installer_1.4.1.msi"
-  })
+  tags                   = { "Name" : "E24x7 DMS-C", "Description" : "Database Migration Service Collector" }
+  user_data              = file("${path.module}/user_data.ps1")
 }
 resource "aws_security_group" "sg_dmscollector" {
   name        = "E24x7-DMSC"

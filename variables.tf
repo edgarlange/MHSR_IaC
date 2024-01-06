@@ -14,6 +14,10 @@ variable "proyecto" {
   description = "Proyecto"
   type        = string
 }
+variable "map_migrated" {
+  description = "MAP Migrated code"
+  type        = string
+}
 variable "region" {
   description = "Region"
   type        = string
@@ -29,6 +33,9 @@ variable "aws_account_id" {
 variable "create_iam_ad" {
   type = bool
 }
+variable "create_iam_dmsc" {
+  type = bool
+}
 variable "create_iam_sr" {
   type = bool
 }
@@ -39,9 +46,6 @@ variable "create_sr_collector" {
   type = bool
 }
 variable "create_dms_collector" {
-  type = bool
-}
-variable "create_s3_fleet" {
   type = bool
 }
 variable "vpc_id" {

@@ -6,7 +6,9 @@
 /keys/private.*
 /keys/encrypted.*
 private.*
-encrypted.*
+encrypted*.*
+key_*.*
+/access_keys/*
 
 ### macOS ###
 # General

@@ -1,15 +1,3 @@
-variable "proveedor" {
-  description = "Proveedor"
-  type        = string
-}
-variable "area" {
-  description = "Area"
-  type        = string
-}
-variable "proyecto" {
-  description = "Proyecto"
-  type        = string
-}
 variable "ad_agent_access" {
   description = "Application Discovery Agent Access - Managed policy - ARN"
   type        = string

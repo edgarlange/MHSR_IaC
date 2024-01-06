@@ -1,15 +1,3 @@
-variable "proveedor" {
-  description = "Proveedor"
-  type        = string
-}
-variable "area" {
-  description = "Area"
-  type        = string
-}
-variable "proyecto" {
-  description = "Proyecto"
-  type        = string
-}
 variable "aws_account_id" {
   description = "AWS Account ID"
   type        = string

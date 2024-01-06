@@ -1,10 +1,17 @@
 resource "aws_iam_user" "e24x7_sr_user" {
   name = var.sr_user_name
-  tags = local.resource_tags
 }
 resource "aws_iam_access_key" "sr" {
   user    = aws_iam_user.e24x7_sr_user.name
   pgp_key = file("./keys/publicbase64.key")
+}
+resource "local_file" "access_key_id_sr" {
+  content  = aws_iam_access_key.sr.id
+  filename = "./access_keys/key_id_sr.txt"
+}
+resource "local_file" "access_key_secret_sr" {
+  content  = aws_iam_access_key.sr.encrypted_secret
+  filename = "./access_keys/key_secret_sr.txt"
 }
 resource "aws_iam_policy" "porting_assistant" {
   name        = "PortingAssistantPolicy"
@@ -32,7 +39,6 @@ resource "aws_iam_policy" "porting_assistant" {
       }
     ]
   })
-  tags = local.resource_tags
 }
 resource "aws_iam_user_policy_attachment" "porting_attach" {
   user       = aws_iam_user.e24x7_sr_user.name

@@ -1,10 +1,17 @@
 resource "aws_iam_user" "e24x7_fac_user" {
   name = var.fac_user_name
-  tags = local.resource_tags
 }
 resource "aws_iam_access_key" "fac" {
   user    = aws_iam_user.e24x7_fac_user.name
   pgp_key = file("./keys/publicbase64.key")
+}
+resource "local_file" "access_key_id_fac" {
+  content  = aws_iam_access_key.fac.id
+  filename = "./access_keys/key_id_fac.txt"
+}
+resource "local_file" "access_key_secret_fac" {
+  content  = aws_iam_access_key.fac.encrypted_secret
+  filename = "./access_keys/key_secret_fac.txt"
 }
 resource "aws_iam_policy" "service_linked_role_policy" {
   name        = "DMSFleetAdvisorCreateServiceLinkedRolePolicy"
@@ -31,7 +38,6 @@ resource "aws_iam_policy" "service_linked_role_policy" {
       }
     ]
   })
-  tags = local.resource_tags
 }
 resource "aws_iam_service_linked_role" "dms_fleet_advisor" {
   aws_service_name = var.dms_fleet_advisor_service
@@ -54,7 +60,6 @@ resource "aws_iam_policy" "dms_collector" {
       "Resource" : "*"
     }]
   })
-  tags = local.resource_tags
 }
 resource "aws_iam_policy" "fleet_advisor_s3" {
   name        = "FleetAdvisorS3Policy"
@@ -81,7 +86,6 @@ resource "aws_iam_policy" "fleet_advisor_s3" {
       }
     ]
   })
-  tags = local.resource_tags
 }
 resource "aws_iam_role" "fleet_advisor_s3" {
   name = "FleetAdvisorS3Role"
@@ -108,7 +112,6 @@ resource "aws_iam_role" "fleet_advisor_s3" {
       # }
     }]
   })
-  tags = local.resource_tags
 }
 resource "aws_iam_role_policy_attachment" "fleet_policy_attach" {
   role       = aws_iam_role.fleet_advisor_s3.name

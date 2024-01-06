@@ -1,8 +1,9 @@
 locals {
   resource_tags = {
-    "Proveedor" = var.proveedor
-    "Area"      = var.area
-    "Proyecto"  = var.proyecto
+    "Proveedor"    = var.proveedor
+    "Area"         = var.area
+    "Proyecto"     = var.proyecto
+    "map-migrated" = var.map_migrated
   }
 }
 resource "random_string" "sufijo-s3" {
