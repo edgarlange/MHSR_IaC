@@ -1,20 +1,114 @@
 variable "alias" {
-  description = "Alias Cloud Native and Modernization"
+  description = "Alias"
   type        = string
-  default     = "cnam"
 }
 variable "proveedor" {
-  description = "Escala 24x7"
+  description = "Proveedor"
   type        = string
-  default     = "Escala 24x7"
 }
 variable "area" {
-  description = "Cloud Native and Modernization"
+  description = "Area"
   type        = string
-  default     = "Cloud Native and Modernization"
+}
+variable "proyecto" {
+  description = "Proyecto"
+  type        = string
+}
+variable "map_migrated" {
+  description = "MAP Migrated code"
+  type        = string
+}
+variable "iac" {
+  description = "IaC"
+  type        = string
+}
+variable "deploy_id" {
+  description = "Deploy ID"
+  type        = string
+}
+variable "region" {
+  description = "Region"
+  type        = string
 }
 variable "aws_profile" {
   description = "AWS Profile"
   type        = string
-  default     = "elange-CNAM-AA" # <---- Default, elange-CNAM-AA, etc
+}
+variable "aws_account_id" {
+  description = "AWS Account ID"
+  type        = string
+}
+variable "create_iam_ad" {
+  type = bool
+}
+variable "create_iam_dmsc" {
+  type = bool
+}
+variable "create_iam_sr" {
+  type = bool
+}
+variable "create_porting_assistant" {
+  type = bool
+}
+variable "create_sr_collector" {
+  type = bool
+}
+variable "create_dms_collector" {
+  type = bool
+}
+variable "vpc_id" {
+  description = "VPC ID"
+  type        = string
+}
+variable "vpc_cidr" {
+  description = "VPC CIDR"
+  type        = string
+}
+variable "subnet_id" {
+  description = "Subnet ID"
+  type        = string
+}
+variable "subnet_cidr" {
+  description = "Subnet CIDR"
+  type        = string
+}
+variable "ami_w2022" {
+  description = "AMI Windows 2022"
+  type        = string
+}
+variable "ami_appdatcollector" {
+  description = "AMI"
+  type        = string
+}
+variable "my_ip" {
+  description = "My IP Address"
+  type        = string
+}
+variable "ads_user_name" {
+  description = "Applications Discovery Service user name"
+  type        = string
+}
+variable "fac_user_name" {
+  description = "Fleet Advisor Collector user name"
+  type        = string
+}
+variable "sr_user_name" {
+  description = "Strategy Recommendations user name"
+  type        = string
+}
+variable "key_name_porta" {
+  description = "value"
+  type        = string
+}
+variable "key_name_dmsc" {
+  description = "value"
+  type        = string
+}
+variable "key_name_mhsr" {
+  description = "value"
+  type        = string
+}
+variable "bucket_name" {
+  description = "Bucket name"
+  type        = string
 }

@@ -1,45 +1,72 @@
 module "s3" {
   source      = "./modules/s3"
-  bucket_name = "e24x7-ads-${local.s3-sufix}"
+  count       = var.create_iam_dmsc ? 1 : 0
+  bucket_name = "${var.bucket_name}-${local.s3-sufix}"
 }
-module "iam" {
-  source                = "./modules/iam"
-  ad_agent_access       = "arn:aws:iam::aws:policy/AWSApplicationDiscoveryAgentAccess"
-  ad_agentless          = "arn:aws:iam::aws:policy/AWSApplicationDiscoveryAgentlessCollectorAccess"
+module "iam_ad" {
+  source          = "./modules/iam_ad"
+  count           = var.create_iam_ad ? 1 : 0
+  aws_account_id  = var.aws_account_id
+  ad_agent_access = "arn:aws:iam::aws:policy/AWSApplicationDiscoveryAgentAccess"
+  ad_agentless    = "arn:aws:iam::aws:policy/AWSApplicationDiscoveryAgentlessCollectorAccess"
+  ads_user_name   = var.ads_user_name
+}
+module "iam_dms" {
+  source                    = "./modules/iam_dms"
+  count                     = var.create_iam_dmsc ? 1 : 0
+  aws_account_id            = var.aws_account_id
+  dms_fleet_advisor_service = "dms-fleet-advisor.amazonaws.com"
+  fac_user_name             = var.fac_user_name
+  bucket_name               = one(module.s3[*].bucket_name)
+}
+module "iam_sr" {
+  source                = "./modules/iam_sr"
+  count                 = var.create_iam_sr ? 1 : 0
+  aws_account_id        = var.aws_account_id
   mh_strategy_collector = "arn:aws:iam::aws:policy/AWSMigrationHubStrategyCollector"
-  cnam_user_name        = "e24x7-adssr-user"
-  cnam_bucket_name      = module.s3.cnam_bucket_name
+  sr_user_name          = var.sr_user_name
 }
-module "collector" {
-  source      = "./modules/collector"
-  vpc_id      = "vpc-07f729a36fd63ea2b"    # <---- VPC ID donde se despliega el collector
-  vpc_cidr    = "10.199.0.0/16"            # <---- CIDR del VPC
-  subnet_id   = "subnet-034b90e222dbf26ec" # <---- Subnet ID donde se despliega el collector
-  subnet_cidr = "10.199.0.0/24"            # <---- CIDR de la Subnet
+module "sr_collector" {
+  source         = "./modules/ec2_srcollector"
+  count          = var.create_sr_collector ? 1 : 0
+  aws_account_id = var.aws_account_id
+  vpc_id         = var.vpc_id
+  vpc_cidr       = var.vpc_cidr
+  subnet_id      = var.subnet_id
   ec2_collector_specs = {
-    "ami"           = "ami-00f1dcf87ef02c147" # AMI AWSMHubApplicationDataCollector. Propietario 703163444405
+    "ami"           = var.ami_appdatcollector
     "instance_type" = "t3.large"
   }
-  external_mgmt_ip = "186.188.205.168/32" # <---- IP externa Team CNAM
+  external_mgmt_ip = var.my_ip
+  key_pair_name    = var.key_name_mhsr
 }
-module "codeanalysis" {
-  source      = "./modules/codeanalysis"
-  vpc_id      = "vpc-07f729a36fd63ea2b"    # <---- VPC ID donde se despliega el collector
-  vpc_cidr    = "10.199.0.0/16"            # <---- CIDR del VPC
-  subnet_id   = "subnet-034b90e222dbf26ec" # <---- Subnet ID donde se despliega el collector
-  subnet_cidr = "10.199.0.0/24"            # <---- CIDR de la Subnet
+module "code_analysis" {
+  source         = "./modules/ec2_codeanalysis"
+  count          = var.create_porting_assistant ? 1 : 0
+  aws_account_id = var.aws_account_id
+  vpc_id         = var.vpc_id
+  vpc_cidr       = var.vpc_cidr
+  subnet_id      = var.subnet_id
+  subnet_cidr    = var.subnet_cidr
   ec2_codeanalysis_specs = {
-    "ami"           = "ami-0fae5ac34f36d5963" # AMI Windows 2019
+    "ami"           = var.ami_w2022
     "instance_type" = "t3.large"
   }
-  external_mgmt_ip = "186.188.205.168/32" # <---- IP externa Team CNAM
+  external_mgmt_ip = var.my_ip
+  key_pair_name    = var.key_name_porta
 }
-
-
-
-
-
-
-
-
-
+module "dms_collector" {
+  source         = "./modules/ec2_dmscollector"
+  count          = var.create_dms_collector ? 1 : 0
+  aws_account_id = var.aws_account_id
+  vpc_id         = var.vpc_id
+  vpc_cidr       = var.vpc_cidr
+  subnet_id      = var.subnet_id
+  subnet_cidr    = var.subnet_cidr
+  ec2_dmscollector_specs = {
+    "ami"           = var.ami_w2022
+    "instance_type" = "t3.large"
+  }
+  external_mgmt_ip = var.my_ip
+  key_pair_name    = var.key_name_dmsc
+}

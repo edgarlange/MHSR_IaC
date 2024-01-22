@@ -2,11 +2,8 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=terraform
 
 ### keys ###
-/keys/*.pem
-/keys/private.*
-/keys/encrypted.*
-private.*
-encrypted.*
+/keys/*
+/access_keys/*
 
 ### macOS ###
 # General

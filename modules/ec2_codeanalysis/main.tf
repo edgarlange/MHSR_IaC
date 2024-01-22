@@ -8,7 +8,7 @@ resource "tls_private_key" "rsa" {
 }
 resource "local_file" "porta_key" {
   content  = tls_private_key.rsa.private_key_pem
-  filename = "./keys/porta-key.pem"
+  filename = "./keys/${var.aws_account_id}/porta-key.pem"
 }
 resource "aws_instance" "porting" {
   ami                    = var.ec2_codeanalysis_specs.ami
@@ -16,11 +16,12 @@ resource "aws_instance" "porting" {
   subnet_id              = var.subnet_id
   key_name               = aws_key_pair.porta_key.key_name
   vpc_security_group_ids = [aws_security_group.sg_codeanalysis.id]
-  tags                   = local.resource_tags
+  tags                   = { "Name" : "E24x7 PA", "Description" : "Porting Assistant" }
+  user_data              = file("${path.module}/user_data.ps1")
 }
 resource "aws_security_group" "sg_codeanalysis" {
-  name        = "CodeAnalysisSG"
-  description = "Code Analysis (Porting Assistant) Group"
+  name        = "E24x7-PA"
+  description = "Allow access from management subnets"
   vpc_id      = var.vpc_id
   ingress {
     description = "RDP from Internet"

@@ -1,12 +1,6 @@
-variable "proveedor" {
-  description = "Escala 24x7"
+variable "aws_account_id" {
+  description = "AWS Account ID"
   type        = string
-  default     = "Escala 24x7"
-}
-variable "area" {
-  description = "Cloud Native and Modernization"
-  type        = string
-  default     = "Cloud Native and Modernization"
 }
 variable "vpc_id" {
   description = "VPC ID"
@@ -25,14 +19,14 @@ variable "subnet_cidr" {
   type        = string
 }
 variable "external_mgmt_ip" {
-  description = "Ingress traffic"
+  description = "CNAM Ingress"
   type        = string
 }
-variable "ec2_codeanalysis_specs" {
+variable "ec2_dmscollector_specs" {
   description = "Parametros de la instancia"
   type        = map(string)
 }
 variable "key_pair_name" {
-  type    = string
-  default = "porta_key"
+  description = "Key pair"
+  type        = string
 }
