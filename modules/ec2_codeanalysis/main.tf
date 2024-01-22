@@ -8,7 +8,7 @@ resource "tls_private_key" "rsa" {
 }
 resource "local_file" "porta_key" {
   content  = tls_private_key.rsa.private_key_pem
-  filename = "./keys/porta-key.pem"
+  filename = "./keys/${var.aws_account_id}/porta-key.pem"
 }
 resource "aws_instance" "porting" {
   ami                    = var.ec2_codeanalysis_specs.ami

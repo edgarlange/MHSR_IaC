@@ -8,7 +8,7 @@ resource "tls_private_key" "rsa" {
 }
 resource "local_file" "mhsr_key" {
   content  = tls_private_key.rsa.private_key_pem
-  filename = "./keys/mhsr-key.pem"
+  filename = "./keys/${var.aws_account_id}/mhsr-key.pem"
 }
 resource "aws_instance" "collector" {
   ami                    = var.ec2_collector_specs.ami
@@ -27,7 +27,7 @@ resource "aws_security_group" "sg_collector" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = [var.external_mgmt_ip, var.subnet_cidr]
+    cidr_blocks = [var.external_mgmt_ip]
   }
   egress {
     from_port   = 0

@@ -18,6 +18,14 @@ variable "map_migrated" {
   description = "MAP Migrated code"
   type        = string
 }
+variable "iac" {
+  description = "IaC"
+  type        = string
+}
+variable "deploy_id" {
+  description = "Deploy ID"
+  type        = string
+}
 variable "region" {
   description = "Region"
   type        = string

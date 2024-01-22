@@ -4,6 +4,8 @@ locals {
     "Area"         = var.area
     "Proyecto"     = var.proyecto
     "map-migrated" = var.map_migrated
+    "Iac"          = var.iac
+    "Deploy ID"    = var.deploy_id
   }
 }
 resource "random_string" "sufijo-s3" {

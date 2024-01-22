@@ -7,11 +7,11 @@ resource "aws_iam_access_key" "fac" {
 }
 resource "local_file" "access_key_id_fac" {
   content  = aws_iam_access_key.fac.id
-  filename = "./access_keys/key_id_fac.txt"
+  filename = "./access_keys/${var.aws_account_id}/key_id_fac.txt"
 }
 resource "local_file" "access_key_secret_fac" {
   content  = aws_iam_access_key.fac.encrypted_secret
-  filename = "./access_keys/key_secret_fac.txt"
+  filename = "./access_keys/${var.aws_account_id}/key_secret_fac.txt"
 }
 resource "aws_iam_policy" "service_linked_role_policy" {
   name        = "DMSFleetAdvisorCreateServiceLinkedRolePolicy"

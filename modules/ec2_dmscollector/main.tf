@@ -8,7 +8,7 @@ resource "tls_private_key" "rsa" {
 }
 resource "local_file" "dmsc_key" {
   content  = tls_private_key.rsa.private_key_pem
-  filename = "./keys/dmsc-key.pem"
+  filename = "./keys/${var.aws_account_id}/dmsc-key.pem"
 }
 resource "aws_instance" "dmscollector" {
   ami                    = var.ec2_dmscollector_specs.ami

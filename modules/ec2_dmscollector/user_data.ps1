@@ -11,7 +11,7 @@ if(!(test-path -Path "${folder}"))
 
 ## AWSCLI
 msiexec.exe /i $awscliurl /quiet /LEI "c:\temp\AWSCLI.log"
-Start-Sleep -Seconds 60
+Start-Sleep -Seconds 120
 
 ## DMS Collector
 msiexec.exe /i $dmscurl /quiet /LEI "c:\temp\DMSCollector.log"

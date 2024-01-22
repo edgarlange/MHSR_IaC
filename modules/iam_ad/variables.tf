@@ -1,3 +1,7 @@
+variable "aws_account_id" {
+  description = "AWS Account ID"
+  type        = string
+}
 variable "ad_agent_access" {
   description = "Application Discovery Agent Access - Managed policy - ARN"
   type        = string
