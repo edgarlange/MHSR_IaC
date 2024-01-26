@@ -30,3 +30,7 @@ variable "key_pair_name" {
   description = "Key pair"
   type        = string
 }
+variable "srcollector_sg" {
+  description = "SR Collector Security Group"
+  type        = string
+}

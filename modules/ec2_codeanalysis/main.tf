@@ -16,11 +16,11 @@ resource "aws_instance" "porting" {
   subnet_id              = var.subnet_id
   key_name               = aws_key_pair.porta_key.key_name
   vpc_security_group_ids = [aws_security_group.sg_codeanalysis.id]
-  tags                   = { "Name" : "E24x7 PA", "Description" : "Porting Assistant" }
+  tags                   = { "Name" : "E24x7 CODE", "Description" : "Porting Assistant / Microservice Extractor" }
   user_data              = file("${path.module}/user_data.ps1")
 }
 resource "aws_security_group" "sg_codeanalysis" {
-  name        = "E24x7-PA"
+  name        = "E24x7-CODE"
   description = "Allow access from management subnets"
   vpc_id      = var.vpc_id
   ingress {
@@ -29,6 +29,13 @@ resource "aws_security_group" "sg_codeanalysis" {
     to_port     = 3389
     protocol    = "tcp"
     cidr_blocks = [var.external_mgmt_ip, var.subnet_cidr]
+  }
+  ingress {
+    description     = "Access WinRM from SR Collector"
+    from_port       = 5986
+    to_port         = 5986
+    protocol        = "tcp"
+    security_groups = [var.srcollector_sg]
   }
   egress {
     from_port   = 0

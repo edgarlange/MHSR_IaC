@@ -48,6 +48,7 @@ module "code_analysis" {
   vpc_cidr       = var.vpc_cidr
   subnet_id      = var.subnet_id
   subnet_cidr    = var.subnet_cidr
+  srcollector_sg = one(module.sr_collector[*].srcollector_sg)
   ec2_codeanalysis_specs = {
     "ami"           = var.ami_w2022
     "instance_type" = "t3.large"
