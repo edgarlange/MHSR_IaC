@@ -3,6 +3,11 @@ module "s3" {
   count       = var.create_iam_dmsc ? 1 : 0
   bucket_name = "${var.bucket_name}-${local.s3-sufix}"
 }
+module "s3_mx" {
+  source         = "./modules/s3_mx"
+  count          = var.create_code ? 1 : 0
+  bucket_name_mx = "${var.bucket_name_mx}-${local.s3-sufix}"
+}
 module "iam_ad" {
   source          = "./modules/iam_ad"
   count           = var.create_iam_ad ? 1 : 0
@@ -19,12 +24,33 @@ module "iam_dms" {
   fac_user_name             = var.fac_user_name
   bucket_name               = one(module.s3[*].bucket_name)
 }
+module "iam_mx" {
+  source         = "./modules/iam_mx"
+  count          = var.create_code ? 1 : 0
+  aws_account_id = var.aws_account_id
+  mx_user_name   = var.mx_user_name
+  bucket_name_mx = one(module.s3_mx[*].bucket_name_mx)
+}
 module "iam_sr" {
   source                = "./modules/iam_sr"
   count                 = var.create_iam_sr ? 1 : 0
   aws_account_id        = var.aws_account_id
   mh_strategy_collector = "arn:aws:iam::aws:policy/AWSMigrationHubStrategyCollector"
   sr_user_name          = var.sr_user_name
+}
+module "cast_highlight" {
+  source         = "./modules/ec2_casthighlight"
+  count          = var.create_casth ? 1 : 0
+  aws_account_id = var.aws_account_id
+  vpc_id         = var.vpc_id
+  subnet_id      = var.subnet_id
+  subnet_cidr    = var.subnet_cidr
+  ec2_casthighlight_specs = {
+    "ami"           = var.ami_w2022
+    "instance_type" = "t3.large"
+  }
+  external_mgmt_ip = var.my_ip
+  key_pair_name    = var.key_name_casth
 }
 module "sr_collector" {
   source         = "./modules/ec2_srcollector"
@@ -42,7 +68,7 @@ module "sr_collector" {
 }
 module "code_analysis" {
   source         = "./modules/ec2_codeanalysis"
-  count          = var.create_porting_assistant ? 1 : 0
+  count          = var.create_code ? 1 : 0
   aws_account_id = var.aws_account_id
   vpc_id         = var.vpc_id
   vpc_cidr       = var.vpc_cidr

@@ -47,7 +47,10 @@ variable "create_iam_dmsc" {
 variable "create_iam_sr" {
   type = bool
 }
-variable "create_porting_assistant" {
+variable "create_casth" {
+  type = bool
+}
+variable "create_code" {
   type = bool
 }
 variable "create_sr_collector" {
@@ -88,12 +91,20 @@ variable "ads_user_name" {
   description = "Applications Discovery Service user name"
   type        = string
 }
+variable "mx_user_name" {
+  description = "Microservice Extractor user name"
+  type        = string
+}
 variable "fac_user_name" {
   description = "Fleet Advisor Collector user name"
   type        = string
 }
 variable "sr_user_name" {
   description = "Strategy Recommendations user name"
+  type        = string
+}
+variable "key_name_casth" {
+  description = "value"
   type        = string
 }
 variable "key_name_porta" {
@@ -109,6 +120,10 @@ variable "key_name_mhsr" {
   type        = string
 }
 variable "bucket_name" {
+  description = "Bucket name"
+  type        = string
+}
+variable "bucket_name_mx" {
   description = "Bucket name"
   type        = string
 }
