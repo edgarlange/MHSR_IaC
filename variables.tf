@@ -53,6 +53,9 @@ variable "create_casth" {
 variable "create_code" {
   type = bool
 }
+variable "create_wwama" {
+  type = bool
+}
 variable "create_sr_collector" {
   type = bool
 }
@@ -92,7 +95,11 @@ variable "ads_user_name" {
   type        = string
 }
 variable "mx_user_name" {
-  description = "Microservice Extractor user name"
+  description = "Microsercvice Extractor user name"
+  type        = string
+}
+variable "wwama_user_name" {
+  description = "Windows Web Application Migration Assistant user name"
   type        = string
 }
 variable "fac_user_name" {
@@ -116,6 +123,10 @@ variable "key_name_dmsc" {
   type        = string
 }
 variable "key_name_mhsr" {
+  description = "value"
+  type        = string
+}
+variable "key_name_wwama" {
   description = "value"
   type        = string
 }
